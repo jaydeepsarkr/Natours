@@ -1,9 +1,16 @@
-const getAllUsers = (req, res) => {
-  res.status(500).json({
-    status: 'error',
-    message: 'This route is not yet defined',
+const User = require('../Models/userModel');
+const catchAsync = require('../Utils/catchAsync');
+
+const getAllUsers = catchAsync(async (req, res, next) => {
+  const users = await User.find();
+  res.status(200).json({
+    status: 'success',
+    results: users.length,
+    data: {
+      users,
+    },
   });
-};
+});
 
 const getUser = (req, res) => {
   res.status(500).json({
@@ -34,9 +41,9 @@ const deleteUser = (req, res) => {
 };
 
 module.exports = {
-    getAllUsers,
-    getUser,
-    createUser,
-    updateUser,
-    deleteUser
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
 };
