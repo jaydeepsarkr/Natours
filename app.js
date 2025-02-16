@@ -1,10 +1,10 @@
 const express = require('express');
 const morgan = require('morgan');
 
-const AppError = require('./utils/appError');
-const globalErrorHandler = require('./controllers/errorController');
-const tourRouter = require('./routes/tourRoutes');
-const userRouter = require('./routes/userRoutes');
+const AppError = require('./Utils/appError');
+const globalErrorHandler = require('./Controllers/errorController');
+const tourRouter = require('./Routes/tourRoutes');
+const userRouter = require('./Routes/userRoutes');
 
 const app = express();
 
