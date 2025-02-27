@@ -15,20 +15,23 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
+  const cookieExpiresIn = process.env.JWT_COOKIE_EXPIRES_IN
+    ? process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    : 90 * 24 * 60 * 60 * 1000; // Default: 90 days
+
   res.cookie('jwt', token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
-    ),
+    expires: new Date(Date.now() + cookieExpiresIn),
     httpOnly: true,
-    secure: req.secure || req.headers['x-forwarded-proto'] === 'https',
+    secure: process.env.NODE_ENV === 'production', // Secure only in production
+    sameSite: 'strict', // Prevents CSRF attacks
   });
-  user.password = undefined; // remove password from response
+
+  user.password = undefined; // Remove password from response
+
   res.status(statusCode).json({
     status: 'success',
     token,
-    data: {
-      user: user,
-    },
+    data: { user },
   });
 };
 
