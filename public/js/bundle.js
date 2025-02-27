@@ -12762,7 +12762,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // Signup function
 var signup = exports.signup = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(name, email, password, passwordConfirm) {
-    var res, _err$response;
+    var res;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -12791,7 +12791,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          (0, _alerts.showAlert)('error', ((_err$response = _context.t0.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Something went wrong');
+          (0, _alerts.showAlert)('error', _context.t0.response.message || 'Something went wrong');
         case 10:
         case "end":
           return _context.stop();
@@ -13161,7 +13161,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53496" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57338" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

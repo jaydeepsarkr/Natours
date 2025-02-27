@@ -15,7 +15,7 @@ const signup = async (name, email, password, passwordConfirm) => {
       window.setTimeout(() => location.assign('/'), 1500);
     }
   } catch (err) {
-    showAlert('error', err.response?.data?.message || 'Something went wrong');
+    showAlert('error', err.response.message || 'Something went wrong');
   }
 };
 
