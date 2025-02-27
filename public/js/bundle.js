@@ -12762,7 +12762,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // Signup function
 var signup = exports.signup = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(name, email, password, passwordConfirm) {
-    var res;
+    var res, _err$response, errorMessage;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -12783,16 +12783,18 @@ var signup = exports.signup = /*#__PURE__*/function () {
           if (res.data.status === 'success') {
             (0, _alerts.showAlert)('success', 'Account created successfully!');
             window.setTimeout(function () {
-              return location.assign('/');
+              return location.assign('/login');
             }, 1500);
           }
-          _context.next = 10;
+          _context.next = 12;
           break;
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          (0, _alerts.showAlert)('error', _context.t0.response.message || 'Something went wrong');
-        case 10:
+          errorMessage = ((_err$response = _context.t0.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Email Already Exists or Invalid';
+          (0, _alerts.showAlert)('error', errorMessage);
+          console.log(errorMessage);
+        case 12:
         case "end":
           return _context.stop();
       }

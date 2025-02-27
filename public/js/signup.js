@@ -12,10 +12,12 @@ const signup = async (name, email, password, passwordConfirm) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Account created successfully!');
-      window.setTimeout(() => location.assign('/'), 1500);
+      window.setTimeout(() => location.assign('/login'), 1500);
     }
   } catch (err) {
-    showAlert('error', err.response.message || 'Something went wrong');
+    const errorMessage = err.response?.data?.message || 'Email Already Exists or Invalid';
+    showAlert('error', errorMessage);
+    console.log(errorMessage);
   }
 };
 
