@@ -12782,9 +12782,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
           res = _context.sent;
           if (res.data.status === 'success') {
             (0, _alerts.showAlert)('success', 'Account created successfully!');
-            window.setTimeout(function () {
-              return location.assign('/login');
-            }, 1500);
+            // window.setTimeout(() => location.assign('/login'), 1500);
           }
           _context.next = 12;
           break;
