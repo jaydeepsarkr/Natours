@@ -13,17 +13,22 @@ export const updateSettings = async (data, type) => {
     const res = await axios({
       method: 'PATCH',
       url,
-      data
+      data,
     });
 
     if (res.data.status === 'success') {
       showAlert('success', `${type.toUpperCase()} updated successfully!`);
     }
+
+    if (type === 'data') {
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500); // Small delay to allow alert to show before reload
+    }
   } catch (err) {
     showAlert('error', err.response.data.message);
   }
 };
-
 
 const userDataForm = document.querySelector('.form-user-data');
 
@@ -57,4 +62,3 @@ if (userPasswordForm)
     document.getElementById('password').value = '';
     document.getElementById('password-confirm').value = '';
   });
-
