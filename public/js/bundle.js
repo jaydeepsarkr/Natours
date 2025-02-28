@@ -12791,7 +12791,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          errorMessage = 'Email Already Exists or Invalid' || _context.t0.response.data.message;
+          errorMessage = _context.t0.response.data.message || 'Email Already Exists or Invalid';
           (0, _alerts.showAlert)('error', errorMessage);
           console.log(errorMessage);
         case 12:
@@ -12875,14 +12875,32 @@ var updateSettings = exports.updateSettings = /*#__PURE__*/function () {
   };
 }();
 var userDataForm = document.querySelector('.form-user-data');
-if (userDataForm) userDataForm.addEventListener('submit', function (e) {
-  e.preventDefault();
-  var form = new FormData();
-  form.append('name', document.getElementById('name').value);
-  form.append('email', document.getElementById('email').value);
-  form.append('photo', document.getElementById('photo').files[0]);
-  updateSettings(form, 'data');
-});
+if (userDataForm) {
+  var photoInput = document.getElementById('photo');
+  var photoPreview = document.querySelector('.form__user-photo');
+
+  // Image preview functionality
+  if (photoInput && photoPreview) {
+    photoInput.addEventListener('change', function (e) {
+      var file = e.target.files[0];
+      if (file) {
+        var reader = new FileReader();
+        reader.onload = function (event) {
+          photoPreview.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  }
+  userDataForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = new FormData();
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    updateSettings(form, 'data');
+  });
+}
 var userPasswordForm = document.querySelector('.form-user-password');
 if (userPasswordForm) userPasswordForm.addEventListener('submit', /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
@@ -13210,7 +13228,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49261" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51777" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
