@@ -16,7 +16,7 @@ module.exports = class Email {
       return nodemailer.createTransport({
         host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
         port: process.env.SMTP_PORT || 587,
-        secure: false, // Set to true if using port 465 (SSL)
+        secure: true, // Set to true if using port 465 (SSL)
         auth: {
           user: process.env.SMTP_USERNAME,
           pass: process.env.SMTP_PASSWORD,
