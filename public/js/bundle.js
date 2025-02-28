@@ -12762,7 +12762,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // Signup function
 var signup = exports.signup = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(name, email, password, passwordConfirm) {
-    var res, errorMessage;
+    var res, _err$response, errorMessage;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -12791,7 +12791,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          errorMessage = _context.t0.response.data.message || 'Email Already Exists or Invalid';
+          errorMessage = ((_err$response = _context.t0.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Email Already Exists or Invalid';
           (0, _alerts.showAlert)('error', errorMessage);
           console.log(errorMessage);
         case 12:
