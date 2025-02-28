@@ -37,19 +37,26 @@ module.exports = class Email {
   }
 
   async send(template, subject) {
-    const html = pug.renderFile(
-      path.join(__dirname, '../views/email', `${template}.pug`),
-      {
-        firstName: this.firstName,
-        url: this.url,
-        subject,
-      },
+    const filePath = path.resolve(
+      __dirname,
+      '..',
+      '..',
+      'views',
+      'email',
+      `${template}.pug`,
     );
-    console.log(html);
+    console.log('Loading template from:', filePath);
+
+    const html = pug.renderFile(filePath, {
+      firstName: this.firstName,
+      url: this.url,
+      subject,
+    });
+
     const mailOptions = {
       from: this.from,
       to: this.to,
-      subject: subject,
+      subject,
       html,
       text: convert(html),
     };
