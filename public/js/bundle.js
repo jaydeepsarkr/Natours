@@ -12762,7 +12762,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // Signup function
 var signup = exports.signup = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(name, email, password, passwordConfirm) {
-    var res, _err$response, errorMessage;
+    var res, errorMessage;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -12791,7 +12791,7 @@ var signup = exports.signup = /*#__PURE__*/function () {
         case 7:
           _context.prev = 7;
           _context.t0 = _context["catch"](0);
-          errorMessage = ((_err$response = _context.t0.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.message) || 'Email Already Exists or Invalid';
+          errorMessage = 'Email Already Exists or Invalid' || _context.t0.response.data.message;
           (0, _alerts.showAlert)('error', errorMessage);
           console.log(errorMessage);
         case 12:
@@ -12869,6 +12869,48 @@ var updateSettings = exports.updateSettings = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
+var userDataForm = document.querySelector('.form-user-data');
+if (userDataForm) userDataForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  var form = new FormData();
+  form.append('name', document.getElementById('name').value);
+  form.append('email', document.getElementById('email').value);
+  form.append('photo', document.getElementById('photo').files[0]);
+  updateSettings(form, 'data');
+});
+var userPasswordForm = document.querySelector('.form-user-password');
+if (userPasswordForm) userPasswordForm.addEventListener('submit', /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
+    var passwordCurrent, password, passwordConfirm;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          e.preventDefault();
+          document.querySelector('.btn--save-password').textContent = 'Updating...';
+          passwordCurrent = document.getElementById('password-current').value;
+          password = document.getElementById('password').value;
+          passwordConfirm = document.getElementById('password-confirm').value;
+          _context2.next = 7;
+          return updateSettings({
+            passwordCurrent: passwordCurrent,
+            password: password,
+            passwordConfirm: passwordConfirm
+          }, 'password');
+        case 7:
+          document.querySelector('.btn--save-password').textContent = 'Save password';
+          document.getElementById('password-current').value = '';
+          document.getElementById('password').value = '';
+          document.getElementById('password-confirm').value = '';
+        case 11:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return function (_x3) {
+    return _ref2.apply(this, arguments);
+  };
+}());
 },{"axios":"../../node_modules/axios/index.js","./alerts":"alerts.js"}],"stripe.js":[function(require,module,exports) {
 "use strict";
 
@@ -13163,7 +13205,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57338" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49261" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

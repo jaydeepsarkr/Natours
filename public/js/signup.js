@@ -15,7 +15,8 @@ const signup = async (name, email, password, passwordConfirm) => {
       window.setTimeout(() => location.assign('/login'), 1500);
     }
   } catch (err) {
-    const errorMessage = err.response?.data?.message || 'Email Already Exists or Invalid';
+    const errorMessage =
+      'Email Already Exists or Invalid' || err.response.data.message;
     showAlert('error', errorMessage);
     console.log(errorMessage);
   }
