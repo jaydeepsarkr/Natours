@@ -1,3 +1,4 @@
+/* eslint-disable no-else-return */
 const nodemailer = require('nodemailer');
 const path = require('path');
 const pug = require('pug');
@@ -8,35 +9,34 @@ module.exports = class Email {
     this.to = user.email;
     this.firstName = user.name.split(' ')[0];
     this.url = url;
-    this.from = `Natours <${process.env.EMAIL_FROM}>`;
+    this.from = `Natours <${process.env.EMAIL_FROM || process.env.GMAIL_USERNAME}>`; // Use Gmail if needed
   }
 
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
+      // Gmail SMTP configuration
       return nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
-        port: process.env.SMTP_PORT || 587,
-        secure: false, // Set to true if using port 465 (SSL)
+        service: 'gmail', // This simplifies the host/port for Gmail
         auth: {
-          user: process.env.SMTP_USERNAME,
-          pass: process.env.SMTP_PASSWORD,
+          user: process.env.EMAIL_FROM, // Your Gmail address
+          pass: process.env.GMAIL_APP_PASSWORD, // 16-character App Password
         },
-        tls: {
-          rejectUnauthorized: false, // Helps avoid SSL issues (Optional)
+      });
+    } else {
+      // Development with Mailtrap (optional for local testing)
+      return nodemailer.createTransport({
+        host: process.env.MAILTRAP_HOST,
+        port: process.env.MAILTRAP_PORT,
+        auth: {
+          user: process.env.MAILTRAP_USERNAME,
+          pass: process.env.MAILTRAP_PASSWORD,
         },
       });
     }
-    return nodemailer.createTransport({
-      host: process.env.MAILTRAP_HOST,
-      port: process.env.MAILTRAP_PORT,
-      auth: {
-        user: process.env.MAILTRAP_USERNAME,
-        pass: process.env.MAILTRAP_PASSWORD,
-      },
-    });
   }
 
   async send(template, subject) {
+    // 1. Render HTML using Pug
     const html = pug.renderFile(
       path.join(__dirname, '../views/email', `${template}.pug`),
       {
@@ -45,6 +45,8 @@ module.exports = class Email {
         subject,
       },
     );
+
+    // 2. Define Email Options
     const mailOptions = {
       from: this.from,
       to: this.to,
@@ -52,13 +54,9 @@ module.exports = class Email {
       html,
       text: convert(html),
     };
-    try {
-      await this.newTransport().sendMail(mailOptions);
-      console.log('Email sent successfully:', mailOptions.to);
-    } catch (err) {
-      console.error('Error sending email:', err.message);
-      throw new Error('Error sending email');
-    }
+
+    // 3. Create Transport and Send Email
+    await this.newTransport().sendMail(mailOptions);
   }
 
   async sendWelcome() {
@@ -68,7 +66,7 @@ module.exports = class Email {
   async sendPasswordReset() {
     await this.send(
       'passwordReset',
-      'Your password reset link (Valid for only 10min)',
+      'Your password reset link (Valid for only 10 minutes)',
     );
   }
 };

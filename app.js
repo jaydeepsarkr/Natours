@@ -19,9 +19,9 @@ const bookingRouter = require('./Routes/bookingRoutes');
 const viewRouter = require('./Routes/viewRoutes');
 
 const app = express();
-// app.enable('trust proxy');
-// app.set('trust proxy', true);
-app.set('trust proxy', false);
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', true);
+}
 
 app.set('view engine', 'pug');
 app.set('Views', path.join(__dirname, 'Views'));
