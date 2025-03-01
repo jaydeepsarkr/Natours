@@ -45,7 +45,6 @@ module.exports = class Email {
         subject,
       },
     );
-    console.log(html);
     const mailOptions = {
       from: this.from,
       to: this.to,
@@ -53,8 +52,13 @@ module.exports = class Email {
       html,
       text: convert(html),
     };
-
-    await this.newTransport().sendMail(mailOptions);
+    try {
+      await this.newTransport().sendMail(mailOptions);
+      console.log('Email sent successfully:', mailOptions.to);
+    } catch (err) {
+      console.error('Error sending email:', err.message);
+      throw new Error('Error sending email');
+    }
   }
 
   async sendWelcome() {

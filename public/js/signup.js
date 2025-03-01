@@ -12,6 +12,7 @@ const signup = async (name, email, password, passwordConfirm) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Account created successfully!');
+      document.querySelector('.signUP-btn').textContent = 'created';
       window.setTimeout(() => location.assign('/login'), 1500);
     }
   } catch (err) {
@@ -27,6 +28,7 @@ const signupForm = document.querySelector('.form--signup');
 if (signupForm) {
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    document.querySelector('.signUP-btn').textContent = 'signing...';
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;

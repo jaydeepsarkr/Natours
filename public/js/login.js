@@ -12,6 +12,7 @@ const login = async (email, password) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Logged in successfully!');
+      document.querySelector('.login-btn').textContent = 'sucessfully logged in';
       window.setTimeout(() => location.assign('/'), 1500);
     }
   } catch (err) {
@@ -37,6 +38,7 @@ const loginForm = document.querySelector('.form--login');
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    document.querySelector('.login-btn').textContent = 'loging you in...';
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     login(email, password);
