@@ -29,7 +29,26 @@ app.set('Views', path.join(__dirname, 'Views'));
 app.use(cors());
 app.options('*', cors());
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: [
+          "'self'",
+          'data:',
+          'https://maps.geoapify.com',
+          'https://unpkg.com',
+        ],
+        scriptSrc: ["'self'", 'https://maps.geoapify.com', 'https://unpkg.com'],
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
+        connectSrc: ["'self'", 'https://maps.geoapify.com'],
+        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+      },
+    },
+  }),
+);
+
 // 1) GLOBAL MIDDLEWARES
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
