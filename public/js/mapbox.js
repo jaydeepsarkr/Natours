@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const map = L.map('map').setView(
     [locations[0].coordinates[1], locations[0].coordinates[0]],
-    5,
+    3,
   );
 
   L.tileLayer(
