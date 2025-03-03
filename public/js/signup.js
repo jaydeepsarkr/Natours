@@ -17,7 +17,8 @@ const signup = async (name, email, password, passwordConfirm) => {
     }
   } catch (err) {
     const errorMessage =
-      err.response.data.message || 'Email Already Exists or Invalid'; ;
+      err.response.data.message || 'Email Already Exists or Invalid';
+     signUpBtn.textContent = errorMessage;
     showAlert('error', errorMessage);
     console.log(errorMessage);
   }
