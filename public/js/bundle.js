@@ -27674,7 +27674,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 // Load Stripe once
 var stripePromise = (0, _stripeJs.loadStripe)('pk_test_51QwK4q2MUEl26T2DSbmW9qrK1zDf9DqjVHBqiUUP8XLrpQb2RpnAhuKRKmC9Tbkl2sTx2jtcD0ZqK6HkYeC0KNzE00jGJgEBDR');
 var bookTour = exports.bookTour = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(tourId) {
+  var _ref = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee(tourId, imageCover) {
     var stripe, session, result, _err$response;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
@@ -27685,7 +27685,11 @@ var bookTour = exports.bookTour = /*#__PURE__*/function () {
         case 3:
           stripe = _context.sent;
           _context.next = 6;
-          return _axios.default.get("/api/v1/bookings/checkout-session/".concat(tourId));
+          return _axios.default.get("/api/v1/bookings/checkout-session/".concat(tourId), {
+            params: {
+              imageCover: imageCover
+            } // Pass the image URL
+          });
         case 6:
           session = _context.sent;
           _context.next = 9;
@@ -27710,7 +27714,7 @@ var bookTour = exports.bookTour = /*#__PURE__*/function () {
       }
     }, _callee, null, [[0, 13]]);
   }));
-  return function bookTour(_x) {
+  return function bookTour(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
@@ -27721,23 +27725,24 @@ document.addEventListener('DOMContentLoaded', function () {
   if (bookBtn) {
     bookBtn.addEventListener('click', /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(/*#__PURE__*/_regeneratorRuntime().mark(function _callee2(e) {
-        var tourId;
+        var _e$target$dataset, tourId, imageCover, fullImageURL;
         return _regeneratorRuntime().wrap(function _callee2$(_context2) {
           while (1) switch (_context2.prev = _context2.next) {
             case 0:
               e.target.textContent = 'Processing...';
-              tourId = e.target.dataset.tourId;
-              _context2.next = 4;
-              return bookTour(tourId);
-            case 4:
-              e.target.textContent = 'Book Now';
+              _e$target$dataset = e.target.dataset, tourId = _e$target$dataset.tourId, imageCover = _e$target$dataset.imageCover;
+              fullImageURL = "https://natours-ut2i.onrender.com/img/tours/".concat(imageCover);
+              _context2.next = 5;
+              return bookTour(tourId, fullImageURL);
             case 5:
+              e.target.textContent = 'Book Now';
+            case 6:
             case "end":
               return _context2.stop();
           }
         }, _callee2);
       }));
-      return function (_x2) {
+      return function (_x3) {
         return _ref2.apply(this, arguments);
       };
     }());
