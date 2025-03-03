@@ -27,6 +27,9 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           product_data: {
             name: `${tour.name} Tour`,
             description: tour.summary,
+            images: [
+              `https://natours-ut2i.onrender.com/img/tours/${tour.imageCover}`,
+            ],
           },
         },
       },
