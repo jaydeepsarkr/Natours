@@ -40,10 +40,32 @@ app.use(
           'https://maps.geoapify.com',
           'https://unpkg.com',
         ],
-        scriptSrc: ["'self'", 'https://maps.geoapify.com', 'https://unpkg.com'],
-        styleSrc: ["'self'", "'unsafe-inline'", 'https://unpkg.com'],
-        connectSrc: ["'self'", 'https://maps.geoapify.com'],
-        fontSrc: ["'self'", 'https://fonts.gstatic.com'],
+        scriptSrc: [
+          "'self'",
+          'https://maps.geoapify.com',
+          'https://unpkg.com',
+          'https://js.stripe.com',
+        ],
+        styleSrc: [
+          "'self'",
+          "'unsafe-inline'",
+          'https://unpkg.com',
+          'https://fonts.googleapis.com', // Added Google Fonts here
+        ],
+        connectSrc: [
+          "'self'",
+          'https://maps.geoapify.com',
+          'https://api.stripe.com',
+        ],
+        fontSrc: [
+          "'self'",
+          'https://fonts.gstatic.com', // This allows the actual fonts to load from Google Fonts
+        ],
+        frameSrc: [
+          "'self'",
+          'https://js.stripe.com',
+          'https://hooks.stripe.com',
+        ],
       },
     },
   }),
