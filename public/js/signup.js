@@ -3,10 +3,10 @@ import { showAlert } from './alerts';
 
 // Signup function
 const signup = async (name, email, password, passwordConfirm) => {
-  const signUpBtn = document.querySelector('.signUP-btn'); // Fetch button inside the function to ensure it's always available
+  const signUpBtn = document.querySelector('.signUP-btn'); // Fetch the button inside the function
 
   try {
-    signUpBtn.textContent = 'Signing up...'; // Set loading text at the start
+    signUpBtn.textContent = 'Signing up...'; // Set loading text
 
     const res = await axios({
       method: 'POST',
@@ -16,16 +16,17 @@ const signup = async (name, email, password, passwordConfirm) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Account created successfully!');
-      signUpBtn.textContent = 'Created'; // Success message on button
-      window.setTimeout(() => location.assign('/login'), 1500);
+      setTimeout(() => {
+        location.reload(); // Refresh the page after 2 seconds
+      }, 2000);
     }
   } catch (err) {
     const errorMessage = err.response?.data?.message || 'Email Already Exists or Invalid';
     showAlert('error', errorMessage);
 
-    // Set error message as button text if you want (optional)
-    signUpBtn.textContent = 'Signup Failed'; // Reset to a safe fallback message
-    console.error(errorMessage);
+    setTimeout(() => {
+      location.reload(); // Refresh the page after 2 seconds
+    }, 2000);
   }
 };
 
