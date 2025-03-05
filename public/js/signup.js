@@ -3,7 +3,11 @@ import { showAlert } from './alerts';
 
 // Signup function
 const signup = async (name, email, password, passwordConfirm) => {
+  const signUpBtn = document.querySelector('.signUP-btn'); // Fetch button inside the function to ensure it's always available
+
   try {
+    signUpBtn.textContent = 'Signing up...'; // Set loading text at the start
+
     const res = await axios({
       method: 'POST',
       url: '/api/v1/users/signup',
@@ -12,15 +16,16 @@ const signup = async (name, email, password, passwordConfirm) => {
 
     if (res.data.status === 'success') {
       showAlert('success', 'Account created successfully!');
-      document.querySelector('.signUP-btn').textContent = 'created';
+      signUpBtn.textContent = 'Created'; // Success message on button
       window.setTimeout(() => location.assign('/login'), 1500);
     }
   } catch (err) {
-    const errorMessage =
-      err.response.data.message || 'Email Already Exists or Invalid';
-     signUpBtn.textContent = errorMessage;
+    const errorMessage = err.response?.data?.message || 'Email Already Exists or Invalid';
     showAlert('error', errorMessage);
-    console.log(errorMessage);
+
+    // Set error message as button text if you want (optional)
+    signUpBtn.textContent = 'Signup Failed'; // Reset to a safe fallback message
+    console.error(errorMessage);
   }
 };
 
@@ -29,7 +34,7 @@ const signupForm = document.querySelector('.form--signup');
 if (signupForm) {
   signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    document.querySelector('.signUP-btn').textContent = 'signing...';
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
