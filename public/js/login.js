@@ -17,6 +17,7 @@ const login = async (email, password) => {
     }
   } catch (err) {
     showAlert('error', err.response?.data?.message || 'Something went wrong');
+    window.setTimeout(() => location.assign('/login'), 1500);
   }
 };
 
@@ -27,7 +28,10 @@ const logout = async () => {
       method: 'GET',
       url: '/api/v1/users/logout',
     });
-    if (res.data.status === 'success') location.reload(true);
+    if (res.data.status === 'success') {
+      showAlert('success', 'Account logged out successfully!');
+      window.setTimeout(() => location.assign('/'), 1500);
+    }
   } catch (err) {
     showAlert('error', 'Error logging out! Try again.');
   }
